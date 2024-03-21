@@ -28,6 +28,7 @@ def get_items(db: Session, skip: int = 0, limit: int = 10):
     return db.query(models.Real_object).offset(skip).limit(limit).all()
 
 
+
 def create_user_item(db: Session, object: schemas.Object):
     db_item = models.Real_object(**object.model_dump())
     db.add(db_item)
@@ -37,3 +38,11 @@ def create_user_item(db: Session, object: schemas.Object):
 
 def get_items_for_user(db: Session, email: str):
     return db.query(models.Real_object).filter(models.Real_object.owner == email).all()
+
+def change_item_by_id(db: Session, id: int, object: schemas.ObjectBase):
+    db_object = db.query(models.Real_object).filter(models.Real_object.id == id).first()
+    for attr, value in object.model_dump().items():
+        setattr(db_object, attr, value)
+    db.commit()
+    db.refresh(db_object)
+    return db_object

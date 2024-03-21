@@ -20,4 +20,4 @@ class Real_object(Base):
     adress = Column(String, index=False)
     price = Column(Float)
     img_url = Column(String)
-    owner = Column(String)
+    owner = Column(String, ForeignKey("users.email"))
