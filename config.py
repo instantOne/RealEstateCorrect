@@ -1,1 +1,1 @@
-SQLALCHEMY_DATABASE_URL = "postgres://postgrestest:w61syLWcPSioEVPes5JUPiZg7K9OQWec@dpg-cnstrd21hbls73cri4mg-a/postgrestest_evrk"
+SQLALCHEMY_DATABASE_URL = "postgresql://postgrestest:w61syLWcPSioEVPes5JUPiZg7K9OQWec@dpg-cnstrd21hbls73cri4mg-a/postgrestest_evrk"
