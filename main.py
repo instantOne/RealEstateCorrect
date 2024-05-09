@@ -40,9 +40,9 @@ def read_user(email: str, db: Session = Depends(get_db)):
     return db_user
 
 #добавление объекта
-@app.post("/user/add/object/", response_model=schemas.ObjectBase)
+@app.post("/user/add/object/", response_model=schemas.ObjectViews)
 def create_item_for_user(
-    owner: str, object: schemas.ObjectBase, db: Session = Depends(get_db)
+    owner: str, object: schemas.ObjectViews, db: Session = Depends(get_db)
 ):
     object.owner = owner #костыль
     return crud.create_user_item(db, object=object)
@@ -65,4 +65,16 @@ async def change_item_by_id(object: schemas.ObjectBase, id: int, db: Session = D
 
     return item
 
+@app.post("/items/review/create/")
+async def create_review_for_object(object: schemas.ReviewBase, db: Session = Depends(get_db)):
+    review = crud.create_review_for_object(db, object=object)
+    return review
 
+@app.get("/items/get/{id}")
+def get_object(id: int, db: Session = Depends(get_db)):
+    current_object = crud.get_item_by_id(db, id)
+    return current_object
+
+@app.get("/items/get/avg_price/{id}")
+def get_avg_price(id: int, db: Session = Depends(get_db)):
+    return crud.get_avg_price(db, id)
