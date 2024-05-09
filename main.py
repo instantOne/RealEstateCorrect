@@ -4,6 +4,7 @@ from typing import List
 
 from sql_app import crud, models, schemas
 from sql_app.database import SessionLocal, engine
+import uvicorn
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -78,3 +79,7 @@ def get_object(id: int, db: Session = Depends(get_db)):
 @app.get("/items/get/avg_price/{id}")
 def get_avg_price(id: int, db: Session = Depends(get_db)):
     return crud.get_avg_price(db, id)
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=10000)
